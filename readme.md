@@ -1,4 +1,4 @@
-Readme entry for EMES github repository.
+Readme entry for EMES-Parkinson github repository.
 
 The following steps are required before you can compile and run software for the nRF51822
 
