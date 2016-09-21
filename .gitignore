@@ -35,3 +35,11 @@
 # Project files
 *.project
 *.cproject
+*.xml
+
+# User specific
+*.posix
+
+# Linker
+*.d
+
