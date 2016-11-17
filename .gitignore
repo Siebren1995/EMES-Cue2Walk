@@ -37,6 +37,11 @@
 *.project
 *.cproject
 *.xml
+*.uvopt
+*.uvproj
+*.icf
+*.ewd
+*.ewp
 
 # User specific
 *.posix
