@@ -11,10 +11,12 @@
 #define GYRO_PIN_INT 29
 #define GYRO_PIN_SCL 2
 #define GYRO_PIN_SDA 3
+#define GYRO_ADDRESS 0x69
 
 /*Temp Sensor*/
 #define TEMP_PIN_SCL GYRO_PIN_SCL
 #define TEMP_PIN_SDA GYRO_PIN_SDA
+#define TEMP_ADDRESS 0x40
 
 /*SD-Card Slot*/
 #define SD_PIN_CS   22

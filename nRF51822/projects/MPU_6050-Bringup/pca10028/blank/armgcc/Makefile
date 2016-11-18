@@ -23,8 +23,8 @@ SRC_FILES += \
   $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT_printf.c \
   $(SDK_ROOT)/components/toolchain/gcc/gcc_startup_nrf51.S \
   $(SDK_ROOT)/components/toolchain/system_nrf51.c \
+  $(SDK_ROOT)/components/drivers_nrf/twi_master/nrf_drv_twi.c 
   #  $(SDK_ROOT)/components/drivers_ext/mpu6050/mpu6050.c 
-  #  $(SDK_ROOT)/components/drivers_nrf/twi_master/nrf_drv_twi.c 
 
 # Include folders common to all targets
 INC_FOLDERS += \
