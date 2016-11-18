@@ -76,9 +76,10 @@ int main(void)
 //    uint8_t sample_data;
 //    bool detected_device = false;
 //
-//    APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
+    APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
     LEDS_CONFIGURE(1<<(LED_PIN));
     NRF_LOG_INFO("TWI scanner.\r\n");
+    NRF_LOG_FLUSH();
 
 //    twi_init();
 //
