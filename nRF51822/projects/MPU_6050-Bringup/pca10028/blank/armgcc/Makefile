@@ -23,7 +23,8 @@ SRC_FILES += \
   $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT_printf.c \
   $(SDK_ROOT)/components/toolchain/gcc/gcc_startup_nrf51.S \
   $(SDK_ROOT)/components/toolchain/system_nrf51.c \
-  $(SDK_ROOT)/components/drivers_nrf/twi_master/nrf_drv_twi.c 
+  $(SDK_ROOT)/components/drivers_nrf/twi_master/nrf_drv_twi.c \
+  $(SDK_ROOT)/hardware/mpu6050/MPU6050.c
   #  $(SDK_ROOT)/components/drivers_ext/mpu6050/mpu6050.c 
 
 # Include folders common to all targets
@@ -46,7 +47,8 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/toolchain/cmsis/include \
   $(SDK_ROOT)/components/drivers_nrf/hal \
   $(SDK_ROOT)/components/libraries/log/src \
-  $(SDK_ROOT)/board \
+  $(SDK_ROOT)/hardware \
+  $(SDK_ROOT)/hardware/mpu6050 \
 #  $(PROJ_DIR)/config/twi_scanner_pca10028 
 #  $(PROJ_DIR)/config 
 
