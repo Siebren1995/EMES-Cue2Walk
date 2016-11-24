@@ -53,16 +53,18 @@
 /**
  * @brief Function for main application entry.
  */
+void BROKEN(){
+    NRF_LOG_FLUSH();
+    while(true){
+        LEDS_INVERT(1<<LED_PIN);
+        nrf_delay_ms(1000);
+    }
+
+}
+int8_t sensorValues[6];
 int main(void)
 {
-    //ret_code_t err_code;
-    //uint8_t address;
     mpu_result_t result;
-    //uint8_t WhoAmI = GYRO_REG_WHOAMI;
-    uint8_t regGYROX = GYRO_REG_ACCEL_XOUT_H;
-    //uint8_t sample_data =0;
-    //bool detected_device = false;
-//
     APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
     LEDS_CONFIGURE(1<<(LED_PIN));
     NRF_LOG_INFO("TWI scanner.\r\n");
@@ -71,41 +73,24 @@ int main(void)
     result = mpu_init();
     if(result != MPU_OK){
         NRF_LOG_ERROR("Could not initialize MPU. Err: %d",result);
-        for(;;);
-    }
-    result = mpu_testConnection();
-    if(result != MPU_OK){
-        NRF_LOG_ERROR("MPU did send proper response to WHOAMI request");
-        for(;;);
+        BROKEN();
     }
 
-//
-//    for (address = 1; address <= TWI_ADDRESSES; address++)
-//    {
-//        err_code = nrf_drv_twi_rx(&m_twi, address, &sample_data, sizeof(sample_data));
-//        if (err_code == NRF_SUCCESS)
-//        {
-//            detected_device = true;
-//            NRF_LOG_INFO("TWI device detected at address 0x%x.\r\n", address);
-//        }
-//        NRF_LOG_FLUSH();
-//    }
-//
     while (true)
     {
-        regGYROX = GYRO_REG_GYRO_XOUT_H;
-        //LEDS_INVERT(1<<LED_PIN);
-        uint16_t x;
+        LEDS_INVERT(1<<LED_PIN);
         //mpu_readRegister(WhoAmI,&sample_data,sizeof(sample_data));
         //NRF_LOG_INFO("Device returned: %d\r\n",sample_data);
-        mpu_readRegister(regGYROX,(uint8_t*)&x,sizeof(uint8_t));
-        regGYROX++;
-        mpu_readRegister(regGYROX,(uint8_t*)(&x+1),sizeof(uint8_t));
-        NRF_LOG_INFO("X value: %d\r\n",x);
+//        if(mpu_readRegister(regGYROX,&x,sizeof(uint8_t))!=MPU_OK){
+//            NRF_LOG_ERROR("Something went wrong while reading from MPU\n");
+//            BROKEN();
+//        }
+        mpu_readAccelero(sensorValues);
+//        NRF_LOG_INFO("\r\nX: %d\r\nY: %d\r\nZ: %d\r\n",sensorValues[0],sensorValues[1], sensorValues[2]);
+        NRF_LOG_INFO("X: %d\r\n",sensorValues[0]);
         NRF_LOG_FLUSH();
         nrf_delay_ms(50);
-        //mpu6050_init(0x69);
-        /* Empty loop. */
+
     }
 }
 

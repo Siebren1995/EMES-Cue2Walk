@@ -12,7 +12,7 @@
 #define GYRO_PIN_INT 29
 #define GYRO_PIN_SCL 2
 #define GYRO_PIN_SDA 3
-#define GYRO_ADDRESS 0x68
+#define GYRO_ADDRESS 0x69
 
 
 /*Temp Sensor*/

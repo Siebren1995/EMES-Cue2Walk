@@ -21,6 +21,8 @@
 #define GYRO_REG_ACCEL_ZOUT_L   0x40
 
 /*Gyro-Sensor output registers*/
+/*Contains 2s complement value (signed, with only 1 zero value.
+ * Ranges from -128 to 127*/
 #define GYRO_REG_GYRO_XOUT_H   0x43
 #define GYRO_REG_GYRO_XOUT_L   0x44
 #define GYRO_REG_GYRO_YOUT_H   0x45
@@ -41,6 +43,8 @@ typedef enum mpu_result_s{
 mpu_result_t mpu_init(void);
 mpu_result_t mpu_readRegister(uint8_t mpu_register, uint8_t* buffer, uint8_t buffersize);
 mpu_result_t mpu_writeRegister(uint8_t mpu_register, uint8_t value, bool stopbit);
+mpu_result_t mpu_readGyro(int16_t* buffer);
+mpu_result_t mpu_readAccelero(int8_t* buffer);
 
 mpu_result_t mpu_testConnection(void);
 
