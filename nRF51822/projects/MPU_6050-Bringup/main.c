@@ -61,7 +61,7 @@ void BROKEN(){
     }
 
 }
-int8_t sensorValues[6];
+int16_t sensorValues[3];
 int main(void)
 {
     mpu_result_t result;
@@ -85,9 +85,9 @@ int main(void)
 //            NRF_LOG_ERROR("Something went wrong while reading from MPU\n");
 //            BROKEN();
 //        }
-        mpu_readAccelero(sensorValues);
+        mpu_readAccelero((int8_t*)sensorValues);
 //        NRF_LOG_INFO("\r\nX: %d\r\nY: %d\r\nZ: %d\r\n",sensorValues[0],sensorValues[1], sensorValues[2]);
-        NRF_LOG_INFO("X: %d\r\n",sensorValues[0]);
+        NRF_LOG_INFO(",%d\r\n",sensorValues[0]);
         NRF_LOG_FLUSH();
         nrf_delay_ms(50);
 
