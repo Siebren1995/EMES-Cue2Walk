@@ -12,7 +12,32 @@
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
 uint16_t buffer[10]; //static buffer for algorithm
-int position;
+int position,i,tempPosR,tempPosF,maxBefore,maxAfter;
+const int threshold = 10000;
+void detectFreeze(){
+	maxBefore = 0;
+	maxAfter = 0;
+	for(i = 0; i < 5; i++){
+	/*check bounds of array*/
+		tempPosF = position + i;
+		tempPosR = position - i;
+		if(tempPosR < 0){
+			tempPosR += 10;
+		}
+		if(tempPosF > 9){
+			tempPosR -= 10;
+		}
+		if(buffer[tempPosR] > maxBefore){
+			maxBefore = buffer[tempPosR];
+		}
+		if(buffer[tempPosF] > maxAfter){
+			maxAfter = buffer[tempPosF];
+		}
+	}
+	if(buffer[position] > maxBefore && buffer[position] > maxAfter && buffer[position] > threshold){
+		LEDS_INVERT(1<<LED_PIN);
+	}
+}
 void BROKEN(){
     NRF_LOG_FLUSH();
     while(true){
@@ -38,9 +63,10 @@ int main(void)
     position = 0;
     while (true)
     {
-        LEDS_INVERT(1<<LED_PIN);
+        //LEDS_INVERT(1<<LED_PIN);
 
-        mpu_readAccelero((int8_t*)buffer[position]);
+        mpu_readAccelero((int8_t*)&buffer[position]);
+        detectFreeze();
 //        NRF_LOG_INFO("\r\nX: %d\r\nY: %d\r\nZ: %d\r\n",sensorValues[0],sensorValues[1], sensorValues[2]);
         NRF_LOG_INFO(",%d\r\n",buffer[position]);
         NRF_LOG_FLUSH();
