@@ -13,7 +13,8 @@
 #include "nrf_log_ctrl.h"
 uint16_t buffer[10]; //static buffer for algorithm
 int position,i,tempPosR,tempPosF,maxBefore,maxAfter;
-const int threshold = 10000;
+int filter[4] = {3,1,1,1};
+const int threshold = 30000;
 void detectFreeze(){
 	maxBefore = 0;
 	maxAfter = 0;
@@ -27,14 +28,14 @@ void detectFreeze(){
 		if(tempPosF > 9){
 			tempPosR -= 10;
 		}
-		if(buffer[tempPosR] > maxBefore){
+		if(filter[i]*buffer[tempPosR] > maxBefore){
 			maxBefore = buffer[tempPosR];
 		}
-		if(buffer[tempPosF] > maxAfter){
+		if(filter[i]*buffer[tempPosF] > maxAfter){
 			maxAfter = buffer[tempPosF];
 		}
 	}
-	if(buffer[position] > maxBefore && buffer[position] > maxAfter && buffer[position] > threshold){
+	if((5*buffer[position] > maxBefore) && (5*buffer[position] > maxAfter) && (buffer[position] > threshold)){
 		LEDS_INVERT(1<<LED_PIN);
 	}
 }
@@ -49,6 +50,7 @@ void BROKEN(){
 int16_t sensorValues[3];
 int main(void)
 {
+    nrf_delay_ms(1000);
     mpu_result_t result;
     APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
     LEDS_CONFIGURE(1<<(LED_PIN));

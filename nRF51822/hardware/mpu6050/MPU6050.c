@@ -106,15 +106,15 @@ mpu_result_t mpu_readAccelero(int8_t* buffer){
         return MPU_ERR;
     }
     /*X-axis*/
-    mpu_readRegister(GYRO_REG_ACCEL_XOUT_L,(uint8_t*)buffer,1);
-    mpu_readRegister(GYRO_REG_ACCEL_XOUT_H,((uint8_t*)buffer)+1,1);
+    mpu_readRegister(GYRO_REG_ACCEL_YOUT_L,(uint8_t*)buffer,1);
+    mpu_readRegister(GYRO_REG_ACCEL_YOUT_H,((uint8_t*)buffer)+1,1);
     /*Y-axis*/
-    mpu_readRegister(GYRO_REG_ACCEL_YOUT_L,((uint8_t*)buffer)+2,1);
-    mpu_readRegister(GYRO_REG_ACCEL_YOUT_H,((uint8_t*)buffer)+3,1);
+    //mpu_readRegister(GYRO_REG_ACCEL_YOUT_H,((uint8_t*)buffer)+2,1);
+    //mpu_readRegister(GYRO_REG_ACCEL_YOUT_L,((uint8_t*)buffer)+3,1);
 
     /*Z-axis*/
-    mpu_readRegister(GYRO_REG_ACCEL_ZOUT_L,((uint8_t*)buffer)+4,1);
-    mpu_readRegister(GYRO_REG_ACCEL_ZOUT_H,((uint8_t*)buffer)+5,1);
+    //mpu_readRegister(GYRO_REG_ACCEL_ZOUT_H,((uint8_t*)buffer)+4,1);
+    //mpu_readRegister(GYRO_REG_ACCEL_ZOUT_L,((uint8_t*)buffer)+5,1);
     return MPU_OK;
 }
 mpu_result_t mpu_testConnection(void){
