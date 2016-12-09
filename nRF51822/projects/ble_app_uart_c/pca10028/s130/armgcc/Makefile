@@ -157,6 +157,7 @@ CFLAGS += -ffunction-sections -fdata-sections -fno-strict-aliasing
 CFLAGS += -fno-builtin --short-enums 
 # generate dependency output file
 CFLAGS += -MP -MD
+CFLAGS += -g -ggdb
 
 # C++ flags common to all targets
 CXXFLAGS += \
@@ -181,6 +182,7 @@ LDFLAGS += -mcpu=cortex-m0
 LDFLAGS += -Wl,--gc-sections
 # use newlib in nano version
 LDFLAGS += --specs=nano.specs -lc -lnosys
+LDFLAGS += -g -ggdb
 
 
 
