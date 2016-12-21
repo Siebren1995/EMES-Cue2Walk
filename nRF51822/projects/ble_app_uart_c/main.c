@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include "TOTEM_V1.h"
 #include "nordic_common.h"
 #include "app_error.h"
 #include "app_uart.h"
@@ -597,6 +598,7 @@ int main(void)
 
     for (;;)
     {
+    //	NRF_LOG_INFO("Running mainloop.\r\n");
         power_manage();
     }
 }
