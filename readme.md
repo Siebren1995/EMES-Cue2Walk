@@ -28,7 +28,7 @@ armgcc
 
 Then check in the makefile in that folder whether the nRF(51422) or nRF(51822) is supported
 our chip is 51822, but the 51422 is the same chip with ANT protocol.
-
+enjoy
 For more info:
 www.github.com/wemaketotem
 
