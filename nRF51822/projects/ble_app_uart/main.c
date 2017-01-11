@@ -138,17 +138,19 @@ static void gap_params_init(void)
 /**@snippet [Handling the data received over BLE] */
 static void nus_data_handler(ble_nus_t * p_nus, uint8_t * p_data, uint16_t length)
 {
-    for (uint32_t i = 0; i < length; i++)
+	char temp[16];
+    for (uint32_t i = 0;( i < length) && (i < 15); i++)
     {
-        //while (app_uart_put(p_data[i]) != NRF_SUCCESS);
-    	char value[2];
-    	value[0] = *p_data;
-    	value[1] = '\0';
-    	NRF_LOG_INFO("received: %s\r\n",(int)value);
-    	NRF_LOG_FLUSH();
-    	while(ble_nus_string_send(&m_nus, p_data, length) != NRF_SUCCESS);
+    	temp[i] = p_data[i];
+
+
+
 
     }
+    temp[15] = '\0';
+    NRF_LOG_INFO("Received: %s\r\n",(int)temp);
+    NRF_LOG_FLUSH();
+    ble_nus_string_send(&m_nus, p_data, length);
     //while (app_uart_put('\r') != NRF_SUCCESS);
     //while (app_uart_put('\n') != NRF_SUCCESS);
 }
