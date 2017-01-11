@@ -9,12 +9,12 @@ $(OUTPUT_DIRECTORY)/nrf51422_xxac.out: \
   LINKER_SCRIPT  := ble_app_uart_gcc_nrf51.ld
 # Source files common to all targets
 SRC_FILES += \
-  $(SDK_ROOT)/components/libraries/button/app_button.c \
+  $(SDK_ROOT)/components/libraries/log/src/nrf_log_frontend.c \
+  $(SDK_ROOT)/components/libraries/log/src/nrf_log_backend_serial.c \
   $(SDK_ROOT)/components/libraries/util/app_error.c \
   $(SDK_ROOT)/components/libraries/util/app_error_weak.c \
   $(SDK_ROOT)/components/libraries/fifo/app_fifo.c \
   $(SDK_ROOT)/components/libraries/timer/app_timer.c \
-  $(SDK_ROOT)/components/libraries/uart/app_uart_fifo.c \
   $(SDK_ROOT)/components/libraries/util/app_util_platform.c \
   $(SDK_ROOT)/components/libraries/fstorage/fstorage.c \
   $(SDK_ROOT)/components/libraries/hardfault/hardfault_implementation.c \
@@ -23,7 +23,6 @@ SRC_FILES += \
   $(SDK_ROOT)/components/drivers_nrf/clock/nrf_drv_clock.c \
   $(SDK_ROOT)/components/drivers_nrf/common/nrf_drv_common.c \
   $(SDK_ROOT)/components/drivers_nrf/gpiote/nrf_drv_gpiote.c \
-  $(SDK_ROOT)/components/drivers_nrf/uart/nrf_drv_uart.c \
   $(SDK_ROOT)/examples/bsp/bsp.c \
   $(SDK_ROOT)/examples/bsp/bsp_btn_ble.c \
   $(PROJ_DIR)/main.c \
@@ -35,11 +34,12 @@ SRC_FILES += \
   $(SDK_ROOT)/components/toolchain/system_nrf51.c \
   $(SDK_ROOT)/components/ble/ble_services/ble_nus/ble_nus.c \
   $(SDK_ROOT)/components/softdevice/common/softdevice_handler/softdevice_handler.c \
+  $(SDK_ROOT)/external/segger_rtt/RTT_Syscalls_GCC.c \
+  $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT.c \
+  $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT_printf.c \
 
 # Include folders common to all targets
 INC_FOLDERS += \
-  $(PROJ_DIR)/config/ble_app_uart_pca10028_s130 \
-  $(PROJ_DIR)/config \
   $(SDK_ROOT)/components/drivers_nrf/comp \
   $(SDK_ROOT)/components/drivers_nrf/twi_master \
   $(SDK_ROOT)/components/ble/ble_services/ble_ancs_c \
@@ -126,7 +126,9 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/ble/ble_services/ble_rscs \
   $(SDK_ROOT)/components/softdevice/common/softdevice_handler \
   $(SDK_ROOT)/components/ble/ble_services/ble_hrs \
+    $(SDK_ROOT)/components/libraries/log \
   $(SDK_ROOT)/components/libraries/log/src \
+  $(SDK_ROOT)/external/segger_rtt \
 
 # Libraries common to all targets
 LIB_FILES += \

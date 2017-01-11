@@ -2120,9 +2120,12 @@
 // <e> NRF_LOG_ENABLED - nrf_log - Logging
 //==========================================================
 #ifndef NRF_LOG_ENABLED
-#define NRF_LOG_ENABLED 0
+#define NRF_LOG_ENABLED 1
 #endif
 #if  NRF_LOG_ENABLED
+#define NRF_LOG_BACKEND_SERIAL_USES_RTT 1
+#define NRF_LOG_BACKEND_MAX_STRING_LENGTH 100
+#define NRF_LOG_TIMESTAMP_DIGITS 4
 // <e> NRF_LOG_USES_COLORS - If enabled then ANSI escape code for colors is prefixed to every string
 //==========================================================
 #ifndef NRF_LOG_USES_COLORS
