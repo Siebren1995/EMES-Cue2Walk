@@ -1,4 +1,4 @@
-Readme entry for EMES github repository.
+Readme entry for EMES-Parkinson github repository.
 
 The following steps are required before you can compile and run software for the nRF51822
 
@@ -28,7 +28,7 @@ armgcc
 
 Then check in the makefile in that folder whether the nRF(51422) or nRF(51822) is supported
 our chip is 51822, but the 51422 is the same chip with ANT protocol.
-
+enjoy
 For more info:
 www.github.com/wemaketotem
 
