@@ -27,7 +27,26 @@
 *.i*86
 *.x86_64
 *.hex
+*.bin
 
 # Debug files
 *.dSYM/
 *.su
+
+# Project files
+*.project
+*.cproject
+*.xml
+*.uvopt
+*.uvproj
+*.icf
+*.ewd
+*.ewp
+
+# User specific
+*.posix
+
+# Linker
+*.d
+*.map
+
