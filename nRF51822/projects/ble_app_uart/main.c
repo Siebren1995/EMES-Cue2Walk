@@ -24,6 +24,7 @@
 #include <stdint.h>
 #include <string.h>
 #include "nordic_common.h"
+#include "TOTEM_V1.h"
 #include "nrf.h"
 #include "ble_hci.h"
 #include "ble_advdata.h"
@@ -36,6 +37,8 @@
 #include "app_util_platform.h"
 #include "bsp.h"
 #include "bsp_btn_ble.h"
+#include "nrf_delay.h"
+
 #define NRF_LOG_MODULE_NAME "APP"
 
 
@@ -78,6 +81,51 @@ static uint16_t                         m_conn_handle = BLE_CONN_HANDLE_INVALID;
 
 static ble_uuid_t                       m_adv_uuids[] = {{BLE_UUID_NUS_SERVICE, NUS_SERVICE_UUID_TYPE}};  /**< Universally unique service identifier. */
 
+
+uint16_t buffer[10]; //static buffer for algorithm
+int position,i,tempPosR,tempPosF,maxBefore,maxAfter;
+int filter[4] = {3,1,1,1};
+int holdoff = 0;
+const int threshold = 30000;
+void detectFreeze(){
+	maxBefore = 0;
+	maxAfter = 0;
+	for(i = 0; i < 5; i++){
+	/*check bounds of array*/
+		tempPosF = position + i;
+		tempPosR = position - i;
+		if(tempPosR < 0){
+			tempPosR += 10;
+		}
+		if(tempPosF > 9){
+			tempPosR -= 10;
+		}
+		if(filter[i]*buffer[tempPosR] > maxBefore){
+			maxBefore = buffer[tempPosR];
+		}
+		if(filter[i]*buffer[tempPosF] > maxAfter){
+			maxAfter = buffer[tempPosF];
+		}
+	}
+	if((5*buffer[position] > maxBefore) && (5*buffer[position] > maxAfter) && (buffer[position] > threshold)){
+		LEDS_INVERT(1<<LED_PIN);
+		holdoff++;
+		if(holdoff > 10){
+
+			holdoff = 0;
+			ble_nus_string_send(&m_nus, (uint8_t*)"PEAK", sizeof("PEAK"));
+		}
+
+	}
+}
+void BROKEN(){
+    NRF_LOG_FLUSH();
+    while(true){
+        LEDS_INVERT(1<<LED_PIN);
+        nrf_delay_ms(1000);
+    }
+
+}
 
 /**@brief Function for assert macro callback.
  *
@@ -492,23 +540,31 @@ static void advertising_init(void)
 
 /**@brief Function for placing the application in low power state while waiting for events.
  */
-static void power_manage(void)
-{
-    uint32_t err_code = sd_app_evt_wait();
-    APP_ERROR_CHECK(err_code);
-}
+//static void power_manage(void)
+//{
+//    uint32_t err_code = sd_app_evt_wait();
+//    APP_ERROR_CHECK(err_code);
+//}
 
 
 /**@brief Application main function.
  */
 int main(void)
 {
+
     uint32_t err_code;
     //bool erase_bonds;
+    mpu_result_t result;
     APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
     // Initialize.
+    LEDS_CONFIGURE(1<<(LED_PIN));
     APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, false);
-
+    nrf_delay_ms(1000);
+    result = mpu_init();
+    if(result != MPU_OK){
+        NRF_LOG_ERROR("Could not initialize MPU. Err: %d",result);
+        BROKEN();
+    }
 
 
     ble_stack_init();
@@ -522,10 +578,23 @@ int main(void)
     APP_ERROR_CHECK(err_code);
 
     // Enter main loop.
-    for (;;)
-    {
-        power_manage();
-    }
+    position = 0;
+        while (true)
+        {
+            //LEDS_INVERT(1<<LED_PIN);
+
+            mpu_readAccelero((int8_t*)&buffer[position]);
+            detectFreeze();
+    //        NRF_LOG_INFO("\r\nX: %d\r\nY: %d\r\nZ: %d\r\n",sensorValues[0],sensorValues[1], sensorValues[2]);
+            NRF_LOG_INFO(",%d\r\n",buffer[position]);
+            NRF_LOG_FLUSH();
+            //nrf_delay_ms(50);
+            position++;
+            if(position > 9){
+            	position = 0;
+            }
+
+        }
 }
 
 

@@ -1,5 +1,6 @@
 
 #include <stdio.h>
+#define TWI0_ENABLED 1
 #include "TOTEM_V1.h"
 #include "mpu6050/MPU6050.h"
 #include "boards.h"
