@@ -26,6 +26,7 @@ SRC_FILES += \
   $(SDK_ROOT)/examples/bsp/bsp.c \
   $(SDK_ROOT)/examples/bsp/bsp_btn_ble.c \
   $(PROJ_DIR)/main.c \
+  $(PROJ_DIR)/bluetooth.c \
   $(SDK_ROOT)/components/ble/common/ble_advdata.c \
   $(SDK_ROOT)/components/ble/ble_advertising/ble_advertising.c \
   $(SDK_ROOT)/components/ble/common/ble_conn_params.c \
